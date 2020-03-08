@@ -1,0 +1,41 @@
+Option Explicit
+Dim i, Year, Month, Day, yeardiff, monthdiff, daydiff, d, d1, d2, d3, diff As Single
+Dim result As String
+
+Private Sub Command1_Click()
+Year = Val(Mid(Text1.Text, 1, 4))
+Month = Val(Mid(Text1.Text, 6, 2))
+Day = Val(Mid(Text1.Text, 9, 2))
+
+yeardiff = Abs(2000 - Year)
+monthdiff = Month - 1
+daydiff = Day - 1
+
+If Year > 2000 Then d1 = yeardiff * 365 + (yeardiff - 1) \ 4 + 1 Else: d1 = yeardiff * 365 + yeardiff \ 4
+
+If Month > 8 Then
+    i = (Month - 1) \ 2
+  ElseIf Month > 7 Then
+    i = 3
+  ElseIf Month > 3 Then
+    i = Month \ 3
+  Else
+    i = 0
+End If
+
+If Month > 2 And yeardiff Mod 4 = 0 Then
+  d2 = 60 + (monthdiff - 2) * 30 + i
+ ElseIf Month > 2 And yeardiff Mod 4 <> 0 Then
+  d2 = 59 + (monthdiff - 2) * 30 + i
+ ElseIf Month > 1 Then
+  d2 = 31
+ Else: d2 = 0
+End If
+
+d3 = daydiff
+
+If Year >= 2000 Then d = d1 + d2 + d3: diff = d Mod 7 + 1: result = Mid("六天一二三四五", diff, 1) Else: d = Abs(d1 - d2 - d3): diff = d Mod 7 + 1: result = Mid("六五四三二一天", diff, 1)
+Text2.Text = result
+
+End Sub
+
